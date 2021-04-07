@@ -1,0 +1,57 @@
+#page {
+    display: grid;
+    width: 100%;
+    height: 700px;
+    grid-template: [header-left] "head head" 80px [header-right]
+                 [main-left]   "nav  main" 1fr  [main-right]
+                 [footer-left] "foot  foot" 60px [footer-right]
+                 / 120px 1fr;
+}
+
+header {
+    background-color: lime;
+    grid-area: head;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    padding: 34px 50px;
+}
+
+nav {
+    background-color: lightblue;
+    grid-area: nav;
+}
+
+main {
+    background-color: yellow;
+    grid-area: main;
+}
+
+footer {
+    background-color: red;
+    grid-area: foot;
+}
+
+.header__login {
+
+}
+
+.header__login form {
+    display: inline-block;
+}
+
+.header__login_input {
+    border-radius: 5px;
+}
+
+.header__login_button {
+    border-radius: 5px;
+}
+
+.error {
+    background: red;
+}
+
+.focused { outline: 1px solid red; }
+
