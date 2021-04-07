@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "max@gmail.com",
+      "password": "11111111"
+    },
+    {
+      "id": 2,
+      "email": "julya@gmail.com",
+      "password": "22222222"
+    },
+    {
+      "id": 3,
+      "email": "alex@gmail.com",
+      "password": "33333333"
+    },
+    {
+      "id": 1617808980153,
+      "email": "den@g.ru",
+      "password": "666"
+    },
+    {
+      "id": 1617815985709,
+      "email": "maxi@gmail.cim",
+      "password": "22222222"
+    },
+    {
+      "id": 1617816142573,
+      "email": "deny@g.ru",
+      "password": "44444"
+    },
+    {
+      "id": 1617820090233,
+      "email": "dsdfsd@sfsfdf",
+      "password": "dsfsdfdsfsd"
+    }
+  ]
+}

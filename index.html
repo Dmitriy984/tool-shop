@@ -15,12 +15,30 @@
             <div class="header__address">Address</div>
             <div class="header__telephone">Telephone</div>
             <div class="header__login">
-                <form action="form.php" method="post">
-                    <input type="text" name="login" class="header__login_input" placeholder="Email" tabindex="1">
-                    <input type="password" name="password" class="header__login_input" placeholder="Password" tabindex="2">
-                    <button class="header__login_button">Login</button>
+                <form>
+                    <div>
+                        <label>E-mail</label>
+                        <input type="text" name="login" class="header__login_input" placeholder="E-mail" tabindex="1">
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="password" class="header__login_input" placeholder="Password" tabindex="2">
+                    </div>
+                    <input type="submit" value="Submit" class="header__login_input">
                 </form>
-                <button class="header__login_button">Registration</button>
+                <button id="show-register">Register</button>
+            </div>
+
+            <div id="registration-form-container">
+                <form id="registration-form">
+                    <div>Registration Form</div>
+                    <label for="reg-login">E-mail</label>
+                    <input name="login" type="text" id="reg-login">
+                    <label for="reg-password">Password</label>
+                    <input name="password" type="password" id="reg-password">
+                    <input type="submit" value="Ok">
+                    <input type="button" name="cancel" value="Cancel">
+                </form>
             </div>
         </header>
         <nav>Navigation</nav>
