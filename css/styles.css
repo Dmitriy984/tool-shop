@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
 #page {
     display: grid;
     width: 100%;
-    height: 700px;
-    grid-template: [header-left] "head head" 90px [header-right]
+    min-height: 1200px;
+    grid-template: [header-left] "head head" 110px [header-right]
                  [main-left]   "nav  main" 1fr  [main-right]
                  [footer-left] "foot  foot" 60px [footer-right]
-                 / 120px 1fr;
+                 / 140px 1fr;
 }
 
 header {
@@ -24,7 +26,7 @@ nav {
 }
 
 main {
-    background-color: yellow;
+    /*background-color: yellow;*/
     grid-area: main;
 }
 
@@ -33,9 +35,29 @@ footer {
     grid-area: foot;
 }
 
+.header__logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+
+}
+
+.header__call > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header__call_phone {
+    font-size: 1.5rem;
+    color: red;
+}
+
+.header__call_worktime {
+    display: block;
+}
+
 .header__login {
     align-self: flex-start;
-    /*visibility: hidden;*/
 }
 
 .header__login form {
@@ -99,4 +121,57 @@ footer {
     margin: 5px;
     width: 180px;
 }
+
+.header__logout span {
+    color: red;
+    margin-right: 1vw;
+}
+
+#grid {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2vw;
+    height: 120vh;
+    margin: 1rem;
+}
+
+#grid > div {
+    font-size: 1.3vw;
+    padding: .1em;
+    background: #a8e3de;
+    text-align: center;
+}
+
+.goods_item img {
+    width: 100%;
+    height: auto;
+}
+
+.goods_item span {
+    display: block;
+    min-height: 40px;
+    margin: .1em 0;
+    padding: .2em .5em;
+}
+
+.goods_item p {
+    display: inline-block;
+    float: left;
+    font-size: 1.5vw;
+    font-weight: bold;
+    padding: .5em 1em;
+    margin: 0;
+}
+
+.goods_item button {
+    display: inline-block;
+    float: right;
+    font-size: 1.5vw;
+    font-weight: bold;
+    /*padding: .5em 1em;*/
+    margin: .35em 1em;
+}
+
+
 
