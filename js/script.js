@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     changeCartBlock();
-
     checkLoggied();
 
     function checkEmailField() {
@@ -50,13 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
-        checkEmailInDb(email).then(users => {
+        checkEmailInDb(email).then((users) => {
             if (users.length === 0) {
                 alert('User with this E-mail does not exist');
             } else {
                 if (users[0].password === password) {
+                    displayLogoutBlock(users[0].email, users[0].id);
+                    getGoodsFromCart(users[0].id).then(({cart, total}) => {
+                        changeCartBlock(cart.length, total);
+                    });
                     (async () => {
-                        displayLogoutBlock(users[0].email, users[0].id);
                         await fetch(`${API}users/${users[0].id}`, {
                             method: 'PATCH',
                             headers: {
@@ -67,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     })();
                     document.cookie = `email=${users[0].email}`;
-                    formLogin.elements.password.textContent = '';
                 } else {
                     alert('Wrong password entered');
                 }
@@ -109,15 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayLogoutBlock(login, id) {
         headerLogin.style.display = 'none';
         let div = document.createElement('div');
+        div.classList.add('header__logout');
         let span = document.createElement('span');
         let btn = document.createElement('button');
-        div.classList.add('header__logout');
-        div.style.display = 'block';
-        span.textContent = `${login}`;
-        btn.textContent = 'Logout';
-        div.append(span);
-        div.append(btn);
         headerCart.before(div);
+        div.append(span);
+        span.textContent = `${login}`;
+        div.append(btn);
+        btn.textContent = 'Logout';
 
         btn.addEventListener('click', () => {
             deleteCookie('email');
@@ -137,20 +137,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayLoginBlock() {
         let headerLogout = document.querySelector('.header__logout');
-        headerLogout.style.display = 'none';
         headerLogin.style.display = '';
+        headerLogout.remove();
     }
 
     function checkLoggied() {
         if (document.cookie.indexOf("email") !== -1) {
             let login = readCookie("email");
 
-            checkEmailInDb(login).then(users => {
-                const [user] = users;
+            checkEmailInDb(login).then(([user]) => {
                 if (typeof user != "undefined"
                     && user.email === login
                     && user.isLoggied === true) {
                     displayLogoutBlock(user.email, user.id);
+                    getGoodsFromCart(user.id).then(({cart, total}) => {
+                        changeCartBlock(cart.length, total);
+                    });
                 }
             });
         }
@@ -191,7 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let newUser = {
                 id: Date.now(),
                 email: valueLogin,
-                password: valuePassword
+                password: valuePassword,
+                cart: [],
+                total: 0,
+                isLoggied: false
             };
 
             async function postUserData(data) {
@@ -253,52 +258,99 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //-------------------------Goods Grid----------------------------------------
 
-    let cart = [];
     let total = 0;
-    const goodsGrid = document.getElementById('grid');
 
-    async function getGoods() {
-        let response = await fetch(`${API}goods`);
+    async function getGoodsFromCart(id = '1') {
+        let response = await fetch(`${API}users/${id}`);
         return await response.json();
     }
 
-    getGoods().then(goods => {
-        goods.map(item => {
-            let div = document.createElement('div');
-            div.classList.add('goods_item');
-            let imageItem = document.createElement('img');
-            imageItem.setAttribute('src', item.image);
-            imageItem.setAttribute('alt', item.title);
-            let titleItem = document.createElement('span');
-            titleItem.textContent = `${item.title}`;
-            let priceItem = document.createElement('p');
-            priceItem.innerHTML = `Price: &euro;${item.price}`;
-            let btnAddCart = document.createElement('button');
-            btnAddCart.textContent = 'Add to Cart';
-            div.append(imageItem);
-            div.append(titleItem);
-            div.append(priceItem);
-            div.append(btnAddCart);
-            goodsGrid.append(div);
+    if ( document.getElementById('grid') ) {
+        const goodsGrid = document.getElementById('grid');
 
-            btnAddCart.addEventListener('click', () => {
-                cart = [...cart, item];
-                total += item.price;
-                changeCartBlock(cart.length, total);
-                console.log(cart);
-                console.log(total);
+        async function getGoods() {
+            let response = await fetch(`${API}goods`);
+            return await response.json();
+        }
 
-                (async () => {
-                    await fetch(`${API}users/1`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ cart })
-                    });
-                })();
-            })
+        getGoods().then(goods => {
+            goods.map(item => {
+                let div = document.createElement('div');
+                div.classList.add('goods_item');
+                let imageItem = document.createElement('img');
+                imageItem.setAttribute('src', item.image);
+                imageItem.setAttribute('alt', item.title);
+                let titleItem = document.createElement('span');
+                titleItem.textContent = `${item.title}`;
+                let priceItem = document.createElement('p');
+                priceItem.innerHTML = `Price: &euro;${item.price}`;
+                let btnAddCart = document.createElement('button');
+                btnAddCart.textContent = 'Add to Cart';
+                div.append(imageItem);
+                div.append(titleItem);
+                div.append(priceItem);
+                div.append(btnAddCart);
+                goodsGrid.append(div);
+
+                btnAddCart.addEventListener('click', () => {
+                    getGoodsFromCart().then(({cart, total}) => {
+                        cart = [...cart, item];
+                        total += item.price;
+                        (async () => {
+                            await fetch(`${API}users/1`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ cart, total })
+                            });
+                        })();
+                        changeCartBlock(cart.length, total);
+                        console.log(cart);
+                        console.log(total);
+                    })
+                })
+            });
         });
-    });
+    }
+
+
+//    --------------------------CartTable-----------------------------
+
+    if (document.querySelector('.cart__table')) {
+        let blockCart = document.querySelector('.cart__table');
+        let tableCart = document.createElement('table');
+        let trTitle = document.createElement('tr');
+        let titles = ['Id', 'Product name', 'Quantity', 'Price', 'Actions'];
+
+        titles.forEach(title => {
+            let th = document.createElement('th');
+            th.textContent = title;
+            trTitle.append(th);
+        });
+
+        getGoodsFromCart().then(user => {
+            if (user.cart.length === 0) {
+                console.log("No goods");
+            } else {
+                blockCart.append(tableCart);
+                tableCart.append(trTitle);
+                user.cart.map((item, idx, ) => {
+                    total += item.price;
+                    let tr = document.createElement('tr');
+                    let cells = [idx + 1, item.title, 1, item.price, 'actions'];
+                    cells.forEach(cell => {
+                        let td = document.createElement('td');
+                        td.textContent = cell;
+                        tr.append(td);
+                    });
+                    changeCartBlock(user.cart.length, total);
+                    tableCart.append(tr);
+                })
+                console.log(user.cart);
+            }
+        });
+    }
+
 });

@@ -1,4 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+@font-face {
+    font-family: 'Conv_LSANS';
+    src: url('fonts/LSANS.eot');
+    src: local('☺'), url('fonts/LSANS.woff') format('woff'), url('fonts/LSANS.ttf') format('truetype'), url('fonts/LSANS.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 #page {
     display: grid;
@@ -35,10 +42,11 @@ footer {
     grid-area: foot;
 }
 
-.header__logo {
+.header__logo > a {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-
+    text-decoration: none;
+    color: black;
 }
 
 .header__call > ul {
@@ -61,15 +69,19 @@ footer {
 }
 
 .header__login form {
-    display: inline-block;
+    display: block;
 }
 
 .header__login_input {
+    margin: 0 3px 3px 3px;
     border-radius: 5px;
 }
 
 .header__login_button {
+    display: block;
     border-radius: 5px;
+    margin: 3px;
+    cursor: pointer;
 }
 
 .error {
@@ -127,6 +139,8 @@ footer {
     margin-right: 1vw;
 }
 
+/*------------------------------ gridGoods -------------------------------*/
+
 #grid {
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -173,5 +187,55 @@ footer {
     margin: .35em 1em;
 }
 
+/*----------------------------------- tableCart ---------------------------*/
+
+.cart__table {
+    width: 70vw;
+    margin: 5vw auto;
+}
+
+.cart__table table {
+    width: 100%;
+    font-family: 'Conv_LSANS', Sans-Serif;
+    font-size: 16px;
+    border-radius: 10px;
+    border-spacing: 0;
+    text-align: center;
+}
+
+th {
+    background: #3bbf98;
+    color: white;
+    text-shadow: 0 1px 1px #2D2020;
+    padding: 10px 20px;
+}
+th, td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: white;
+}
+th:first-child, td:first-child {
+    text-align: left;
+}
+th:first-child {
+    border-top-left-radius: 10px;
+}
+th:last-child {
+    border-top-right-radius: 10px;
+    border-right: none;
+}
+td {
+    padding: 10px 20px;
+    background: #F8E391;
+}
+tr:last-child td:first-child {
+    border-radius: 0 0 0 10px;
+}
+tr:last-child td:last-child {
+    border-radius: 0 0 10px 0;
+}
+tr td:last-child {
+    border-right: none;
+}
 
 
