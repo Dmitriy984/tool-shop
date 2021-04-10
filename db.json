@@ -6,41 +6,6 @@
       "password": "11111111",
       "cart": [
         {
-          "id": 2,
-          "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
-          "quantity": 34,
-          "price": 195
-        },
-        {
-          "id": 5,
-          "title": "Makita BO6050J 6 inch/150mm Random Orbital Sander (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56981/58193/5aafb4ade422a7001075773a__45450.1583489856.jpg",
-          "quantity": 15,
-          "price": 264
-        },
-        {
-          "id": 1,
-          "title": "Makita FS6300 Drywall Screwdriver 240V",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56948/58101/5aafb4bce422a700107579ab__31349.1583489852.jpg",
-          "quantity": 10,
-          "price": 105
-        },
-        {
-          "id": 2,
-          "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
-          "quantity": 34,
-          "price": 195
-        },
-        {
-          "id": 3,
-          "title": "Makita HG6531CK Heat Gun 1400W 110V",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/62071/75818/5da978f591b03b1306000055__17528.1583490480.jpg",
-          "quantity": 11,
-          "price": 120
-        },
-        {
           "id": 1,
           "title": "Makita FS6300 Drywall Screwdriver 240V",
           "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56948/58101/5aafb4bce422a700107579ab__31349.1583489852.jpg",
@@ -53,30 +18,9 @@
           "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56981/58193/5aafb4ade422a7001075773a__45450.1583489856.jpg",
           "quantity": 15,
           "price": 264
-        },
-        {
-          "id": 2,
-          "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
-          "quantity": 34,
-          "price": 195
-        },
-        {
-          "id": 2,
-          "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
-          "quantity": 34,
-          "price": 195
-        },
-        {
-          "id": 3,
-          "title": "Makita HG6531CK Heat Gun 1400W 110V",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/62071/75818/5da978f591b03b1306000055__17528.1583490480.jpg",
-          "quantity": 11,
-          "price": 120
         }
       ],
-      "total": 1299,
+      "total": 369,
       "isLoggied": true
     },
     {
@@ -91,9 +35,24 @@
       "id": 3,
       "email": "alex@gmail.com",
       "password": "33333333",
-      "cart": [],
-      "total": 0,
-      "isLoggied": false
+      "cart": [
+        {
+          "id": 1,
+          "title": "Makita FS6300 Drywall Screwdriver 240V",
+          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56948/58101/5aafb4bce422a700107579ab__31349.1583489852.jpg",
+          "quantity": 10,
+          "price": 105
+        },
+        {
+          "id": 2,
+          "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
+          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
+          "quantity": 34,
+          "price": 195
+        }
+      ],
+      "total": 300,
+      "isLoggied": true
     },
     {
       "id": 1617808980153,
@@ -125,12 +84,6 @@
       "password": "dsfsdfdsfsd",
       "cart": [],
       "total": 0,
-      "isLoggied": false
-    },
-    {
-      "id": 1617903127851,
-      "email": "miki@gmail.com",
-      "password": "555",
       "isLoggied": false
     }
   ],

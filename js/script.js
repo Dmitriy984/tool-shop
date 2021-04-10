@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pTotal.style.fontWeight = 'bold';
     headerCart.append(spanCart);
     headerCart.append(pTotal);
+    let login = readCookie("email");
 
     function changeCartBlock(count = 0, total = 0) {
         spanCart.innerHTML = `<a href="cart.html"><i class="fas fa-shopping-cart"> ${count} items</i></a>`;
@@ -32,11 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    inputEmail.onblur = checkEmailField;
+    inputEmail.addEventListener('blur', checkEmailField);
 
     async function checkEmailInDb(email) {
         let response = await fetch(`${API}users?email=${email}`);
         return await response.json();
+    }
+
+    function reloadPage() {
+        window.location.reload();
     }
 
     formLogin.addEventListener('submit', (e) => {
@@ -49,17 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
-        checkEmailInDb(email).then((users) => {
-            if (users.length === 0) {
+        checkEmailInDb(email).then(([user]) => {
+            if (typeof user == "undefined") {
                 alert('User with this E-mail does not exist');
             } else {
-                if (users[0].password === password) {
-                    displayLogoutBlock(users[0].email, users[0].id);
-                    getGoodsFromCart(users[0].id).then(({cart, total}) => {
+                if (user.password === password) {
+                    displayLogoutBlock(user.email, user.id);
+                    getGoodsFromCart(user.id).then(({cart, total}) => {
                         changeCartBlock(cart.length, total);
                     });
                     (async () => {
-                        await fetch(`${API}users/${users[0].id}`, {
+                        await fetch(`${API}users/${user.id}`, {
                             method: 'PATCH',
                             headers: {
                                 'Accept': 'application/json',
@@ -68,7 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             body: JSON.stringify({ isLoggied: true })
                         });
                     })();
-                    document.cookie = `email=${users[0].email}`;
+                    document.cookie = `email=${user.email}`;
+                    reloadPage();
                 } else {
                     alert('Wrong password entered');
                 }
@@ -132,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             })();
             displayLoginBlock();
+            reloadPage();
         });
     }
 
@@ -142,9 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkLoggied() {
-        if (document.cookie.indexOf("email") !== -1) {
-            let login = readCookie("email");
-
+        if (login) {
             checkEmailInDb(login).then(([user]) => {
                 if (typeof user != "undefined"
                     && user.email === login
@@ -258,9 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //-------------------------Goods Grid----------------------------------------
 
-    let total = 0;
-
-    async function getGoodsFromCart(id = '1') {
+    async function getGoodsFromCart(id) {
         let response = await fetch(`${API}users/${id}`);
         return await response.json();
     }
@@ -293,23 +296,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 goodsGrid.append(div);
 
                 btnAddCart.addEventListener('click', () => {
-                    getGoodsFromCart().then(({cart, total}) => {
-                        cart = [...cart, item];
-                        total += item.price;
-                        (async () => {
-                            await fetch(`${API}users/1`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ cart, total })
-                            });
-                        })();
-                        changeCartBlock(cart.length, total);
-                        console.log(cart);
-                        console.log(total);
-                    })
+                    if (login) {
+                        checkEmailInDb(login).then(([user]) => {
+                            if (typeof user != "undefined"
+                                && user.email === login
+                                && user.isLoggied === true) {
+                                getGoodsFromCart(user.id).then(({cart, total}) => {
+                                    cart = [...cart, item];
+                                    total += item.price;
+                                    (async () => {
+                                        await fetch(`${API}users/${user.id}`, {
+                                            method: 'PATCH',
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ cart, total })
+                                        });
+                                    })();
+                                    changeCartBlock(cart.length, total);
+                                    console.log(cart);
+                                    console.log(total);
+                                });
+                            } else {
+                                alert ('You are not logged in!');
+                            }
+                        });
+                    } else {
+                        alert ('You are not logged in!');
+                    }
                 })
             });
         });
@@ -330,27 +345,44 @@ document.addEventListener('DOMContentLoaded', () => {
             trTitle.append(th);
         });
 
-        getGoodsFromCart().then(user => {
-            if (user.cart.length === 0) {
-                console.log("No goods");
-            } else {
-                blockCart.append(tableCart);
-                tableCart.append(trTitle);
-                user.cart.map((item, idx, ) => {
-                    total += item.price;
-                    let tr = document.createElement('tr');
-                    let cells = [idx + 1, item.title, 1, item.price, 'actions'];
-                    cells.forEach(cell => {
-                        let td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.append(td);
+        if (login) {
+            checkEmailInDb(login).then(([user]) => {
+                if (typeof user != "undefined"
+                    && user.email === login
+                    && user.isLoggied === true) {
+                    getGoodsFromCart(user.id).then(({cart, total}) => {
+                        if (cart.length === 0) {
+                            console.log("No goods");
+                        } else {
+                            blockCart.append(tableCart);
+                            tableCart.append(trTitle);
+                            cart.map((item, idx, ) => {
+                                total += item.price;
+                                let tr = document.createElement('tr');
+                                let cells = [idx + 1, item.title, 1, item.price, 'actions'];
+                                cells.forEach(cell => {
+                                    let td = document.createElement('td');
+                                    td.textContent = cell;
+                                    tr.append(td);
+                                });
+                                changeCartBlock(cart.length, total);
+                                tableCart.append(tr);
+                            });
+                            let totalCart = document.createElement('p');
+                            totalCart.classList.add('cart__table_total');
+                            totalCart.innerHTML = `Total: &euro;${total}`;
+                            tableCart.after(totalCart);
+                            console.log(cart);
+                        }
                     });
-                    changeCartBlock(user.cart.length, total);
-                    tableCart.append(tr);
-                })
-                console.log(user.cart);
-            }
-        });
+                }
+            });
+        } else {
+            let message = document.createElement('p');
+            message.classList.add('cart__table_message');
+            message.textContent = 'Log in to add items to your cart!';
+            blockCart.append(message);
+        }
     }
 
 });
