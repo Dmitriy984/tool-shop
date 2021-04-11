@@ -24,6 +24,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
+    align-items: center;
     padding: 13px 30px;
 }
 
@@ -33,7 +34,6 @@ nav {
 }
 
 main {
-    /*background-color: yellow;*/
     grid-area: main;
 }
 
@@ -77,10 +77,17 @@ footer {
     border-radius: 5px;
 }
 
-.header__login_button {
+.header__login_input[type="submit"]:hover {
+    cursor: pointer;
+}
+
+.header__login button {
     display: block;
     border-radius: 5px;
-    margin: 3px;
+    margin: 0 3px;
+}
+
+.header__login button:hover {
     cursor: pointer;
 }
 
@@ -139,6 +146,10 @@ footer {
     margin-right: 1vw;
 }
 
+.header__cart p {
+    margin-bottom: 0;
+}
+
 /*------------------------------ gridGoods -------------------------------*/
 
 #grid {
@@ -183,8 +194,13 @@ footer {
     float: right;
     font-size: 1.5vw;
     font-weight: bold;
-    /*padding: .5em 1em;*/
     margin: .35em 1em;
+    border-radius: 5px;
+}
+
+.good_item_added {
+    color: white;
+    background-color: #0f7f7f;
 }
 
 /*----------------------------------- tableCart ---------------------------*/
