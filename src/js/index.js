@@ -4,6 +4,7 @@ import passSingIn from './auth/passSingIn';
 import passSingUp from './auth/passSingUp';
 import createGridGoods from './gridGoods';
 import createTableCart from './tableCart';
+import createTableOrder from './tableOrder';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -13,5 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   passSingUp();
   createGridGoods();
   createTableCart();
+  createTableOrder();
 
 });

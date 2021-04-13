@@ -23,11 +23,14 @@ export default function createGridGoods() {
         let btnAddCart = document.createElement("button");
         btnAddCart.setAttribute('id', `${id}`);
         btnAddCart.textContent = "Add to Cart";
+        let countItem = document.createElement("span");
+        countItem.classList.add('goods_item_count');
 
         div.append(imageItem);
         div.append(titleItem);
         div.append(priceItem);
         div.append(btnAddCart);
+        div.append(countItem);
         goodsGrid.append(div);
 
         btnAddCart.addEventListener("click", () => {
@@ -45,14 +48,16 @@ export default function createGridGoods() {
                 const goodIndex = cart.findIndex((el) => el.id === item.id);
                 if (good) {
                   cart[goodIndex].quantity += 1;
+                  countItem.textContent = `${cart[goodIndex].quantity}`;
                 } else {
+                  item.quantity = 1;
+                  countItem.textContent = `${item.quantity}`;
                   newCart = [...newCart, item];
                 }
                 newTotal += price;
-                let cartItems = 0;
-                cart.forEach(item => cartItems += item.quantity);
                 toolsShopApi.patchData(id, { cart: newCart, total: newTotal }).then(({cart}) => {
-                  console.log(cart);
+                  let cartItems = 0;
+                  cart.forEach(item => cartItems += item.quantity);
                   changeCartBlock(cartItems, newTotal);
                   btnAddCart.textContent = "Added to Cart";
                   btnAddCart.classList.add("good_item_added");

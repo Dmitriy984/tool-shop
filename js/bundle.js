@@ -81,12 +81,15 @@ function displayLogoutBlock(login, id) {
   div.classList.add("header__logout");
   let span = document.createElement("span");
   let btn = document.createElement("button");
+  let pOrders = document.createElement("p");
   let cartHeader = document.querySelector(".header__cart");
   cartHeader.before(div);
   div.append(span);
   span.textContent = `${login}`;
   div.append(btn);
   btn.textContent = "Sing Out";
+  pOrders.innerHTML = `<a href="orders.html">Your Orders</a>`;
+  div.append(pOrders);
 
   btn.addEventListener("click", () => {
     (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.deleteCookie)("email");
@@ -223,6 +226,9 @@ function passSingUp() {
         email: valueLogin,
         password: valuePassword,
         cart: [],
+        currentOrders: [],
+        completedOrders: [],
+        totalOrders: [],
         total: 0,
         isLoggied: false,
       };
@@ -323,6 +329,26 @@ function changeCartBlock(count, total) {
 
 /***/ }),
 
+/***/ "./src/js/displayMessage.js":
+/*!**********************************!*\
+  !*** ./src/js/displayMessage.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ displayMessage)
+/* harmony export */ });
+
+function displayMessage(text, selector, elem) {
+    let message = document.createElement("p");
+    message.classList.add(selector);
+    message.textContent = text;
+    elem.append(message);
+}
+
+/***/ }),
+
 /***/ "./src/js/gridGoods.js":
 /*!*****************************!*\
   !*** ./src/js/gridGoods.js ***!
@@ -361,11 +387,14 @@ function createGridGoods() {
         let btnAddCart = document.createElement("button");
         btnAddCart.setAttribute('id', `${id}`);
         btnAddCart.textContent = "Add to Cart";
+        let countItem = document.createElement("span");
+        countItem.classList.add('goods_item_count');
 
         div.append(imageItem);
         div.append(titleItem);
         div.append(priceItem);
         div.append(btnAddCart);
+        div.append(countItem);
         goodsGrid.append(div);
 
         btnAddCart.addEventListener("click", () => {
@@ -383,14 +412,16 @@ function createGridGoods() {
                 const goodIndex = cart.findIndex((el) => el.id === item.id);
                 if (good) {
                   cart[goodIndex].quantity += 1;
+                  countItem.textContent = `${cart[goodIndex].quantity}`;
                 } else {
+                  item.quantity = 1;
+                  countItem.textContent = `${item.quantity}`;
                   newCart = [...newCart, item];
                 }
                 newTotal += price;
-                let cartItems = 0;
-                cart.forEach(item => cartItems += item.quantity);
                 toolsShopApi.patchData(id, { cart: newCart, total: newTotal }).then(({cart}) => {
-                  console.log(cart);
+                  let cartItems = 0;
+                  cart.forEach(item => cartItems += item.quantity);
                   (0,_changeCartBlock__WEBPACK_IMPORTED_MODULE_1__.default)(cartItems, newTotal);
                   btnAddCart.textContent = "Added to Cart";
                   btnAddCart.classList.add("good_item_added");
@@ -477,6 +508,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _toolsShopApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toolsShopApi */ "./src/js/toolsShopApi.js");
 /* harmony import */ var _changeCartBlock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./changeCartBlock */ "./src/js/changeCartBlock.js");
 /* harmony import */ var _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/checkLoggied */ "./src/js/auth/checkLoggied.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers */ "./src/js/helpers.js");
+/* harmony import */ var _displayMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./displayMessage */ "./src/js/displayMessage.js");
+
+
 
 
 
@@ -498,42 +533,41 @@ function createTableCart() {
       trTitle.append(th);
     });
 
-    function displayMessage(text) {
-      let message = document.createElement("p");
-      message.classList.add("cart__table_message");
-      message.textContent = text;
-      blockCart.append(message);
-    }
-
     if (_auth_checkLoggied__WEBPACK_IMPORTED_MODULE_2__.login) {
       toolsShopApi.checkEmail(_auth_checkLoggied__WEBPACK_IMPORTED_MODULE_2__.login).then(([user]) => {
-        const { cart, total } = user;
+        const { id, cart, total, currentOrders, totalOrders } = user;
         if (
-            typeof user != "undefined" &&
-            user.email === _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_2__.login &&
-            user.isLoggied === true
+          typeof user != "undefined" &&
+          user.email === _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_2__.login &&
+          user.isLoggied === true
         ) {
           let cartItems = 0;
-          cart.forEach(item => cartItems += item.quantity);
+          cart.forEach((item) => (cartItems += item.quantity));
           (0,_changeCartBlock__WEBPACK_IMPORTED_MODULE_1__.default)(cartItems, total);
           if (cart.length === 0) {
-            displayMessage("No goods");
+            (0,_displayMessage__WEBPACK_IMPORTED_MODULE_4__.default)("No goods", "cart__table_message", blockCart);
           } else {
             blockCart.append(tableCart);
             tableCart.append(thead);
             tableCart.append(tbody);
             thead.append(trTitle);
             cart.map((item, idx) => {
-              const {title, price, quantity} = item;
+              const { title, price, quantity } = item;
               let tr = document.createElement("tr");
               let quantityElement =
-                  '<button class="cart__table_add"><i class="fas fa-minus"></i></button>' +
-                  " " +
-                  quantity +
-                  " " +
-                  '<button class="cart__table_subtract"><i class="fas fa-plus"></i></button>';
-              let deleteElement = `<button class="cart__table_delete">Delete</button>`;
-              let cells = [idx + 1, title, quantityElement, price, deleteElement];
+                '<i data-subtraction class="far fa-minus-square"></i>' +
+                '  <span>' +
+                quantity +
+                '</span>  ' +
+                '<i data-addition class="far fa-plus-square"></i>';
+              let deleteElement = `<button class="cart__table_delete" data-action>Delete</button>`;
+              let cells = [
+                idx + 1,
+                title,
+                quantityElement,
+                `&euro;${price * quantity}`,
+                deleteElement,
+              ];
               cells.forEach((cell) => {
                 let td = document.createElement("td");
                 td.innerHTML = cell;
@@ -545,12 +579,178 @@ function createTableCart() {
             totalCart.classList.add("cart__table_total");
             totalCart.innerHTML = `Total: &euro;${total}`;
             tableCart.after(totalCart);
+            let btnOrder = document.createElement("button");
+            btnOrder.classList.add("cart__table_order");
+            btnOrder.textContent = "To Order";
+            totalCart.after(btnOrder);
+
+            tableCart.addEventListener("click", (e) => {
+              let action = e.target.dataset.action;
+              let subtraction = e.target.dataset.subtraction;
+              let addition = e.target.dataset.addition;
+
+              if (action !== undefined) {
+                let tr = e.target.closest("tr");
+                let idxTr = tr.rowIndex - 1;
+                toolsShopApi.getGoodsFromCart(id).then(({cart, total}) => {
+                  let newTotal =
+                    total - cart[idxTr].quantity * cart[idxTr].price;
+                  toolsShopApi
+                    .patchData(id, {
+                      cart: [...cart.slice(0, idxTr), ...cart.slice(idxTr + 1)],
+                      total: newTotal,
+                    })
+                    .then(({ cart }) => {
+                      tr.parentElement.removeChild(tr);
+                      if (cart.length === 0) (0,_helpers__WEBPACK_IMPORTED_MODULE_3__.reloadPage)();
+                      totalCart.innerHTML = `Total: &euro;${newTotal}`;
+                      let cartItems = 0;
+                      cart.forEach((item) => (cartItems += item.quantity));
+                      (0,_changeCartBlock__WEBPACK_IMPORTED_MODULE_1__.default)(cartItems, newTotal);
+                    });
+                });
+              }
+
+              if (addition !== undefined) {
+                console.log('Plus');
+              }
+
+              if (subtraction !== undefined) {
+                console.log('Minus');
+              }
+
+            });
+
+            btnOrder.addEventListener("click", () => {
+              toolsShopApi
+                .patchData(id, {
+                  currentOrders: [...currentOrders, ...[cart]],
+                  totalOrders: [...totalOrders, total],
+                  cart: [],
+                  total: 0,
+                })
+                .then(() => {
+                  alert("Your order has been sent to the manager!");
+                  (0,_helpers__WEBPACK_IMPORTED_MODULE_3__.reloadPage)();
+                });
+            });
           }
         }
       });
     } else {
-      displayMessage("Log in to add items to your cart!");
+      (0,_displayMessage__WEBPACK_IMPORTED_MODULE_4__.default)(
+        "Log in to add items to your cart!",
+        "cart__table_message",
+        blockCart
+      );
     }
+  }
+  return null;
+}
+
+
+/***/ }),
+
+/***/ "./src/js/tableOrder.js":
+/*!******************************!*\
+  !*** ./src/js/tableOrder.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ createTableOrder)
+/* harmony export */ });
+/* harmony import */ var _toolsShopApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toolsShopApi */ "./src/js/toolsShopApi.js");
+/* harmony import */ var _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth/checkLoggied */ "./src/js/auth/checkLoggied.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers */ "./src/js/helpers.js");
+/* harmony import */ var _displayMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./displayMessage */ "./src/js/displayMessage.js");
+
+
+
+
+
+function createTableOrder() {
+  const toolsShopApi = new _toolsShopApi__WEBPACK_IMPORTED_MODULE_0__.default();
+
+  if (_auth_checkLoggied__WEBPACK_IMPORTED_MODULE_1__.login && document.querySelector(".order__tables")) {
+    const blockOrder = document.querySelector(".order__tables");
+
+    toolsShopApi.checkEmail(_auth_checkLoggied__WEBPACK_IMPORTED_MODULE_1__.login).then(([user]) => {
+      const { id, currentOrders, totalOrders } = user;
+      if (
+        typeof user != "undefined" &&
+        user.email === _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_1__.login &&
+        user.isLoggied === true
+      ) {
+        if (currentOrders.length === 0) {
+          (0,_displayMessage__WEBPACK_IMPORTED_MODULE_3__.default)("No Orders", "order__tables_message", blockOrder);
+        } else {
+          for (let i = 0; i < currentOrders.length; i++) {
+            let tableOrder = document.createElement("table");
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let trTitle = document.createElement("tr");
+            let titles = ["Id", "Product name", "Quantity", "Price"];
+
+            titles.forEach((title) => {
+              let th = document.createElement("th");
+              th.textContent = title;
+              trTitle.append(th);
+            });
+
+            blockOrder.append(tableOrder);
+            tableOrder.append(thead);
+            tableOrder.append(tbody);
+            thead.append(trTitle);
+            currentOrders[i].map((item, idx) => {
+              const { title, price, quantity } = item;
+              let tr = document.createElement("tr");
+              let cells = [
+                idx + 1,
+                title,
+                quantity,
+                `&euro;${price * quantity}`,
+              ];
+              cells.forEach((cell) => {
+                let td = document.createElement("td");
+                td.innerHTML = cell;
+                tr.append(td);
+              });
+              tbody.append(tr);
+            });
+            let totalCart = document.createElement("p");
+            totalCart.classList.add("order__tables_total");
+            totalCart.innerHTML = `Total: &euro;${totalOrders[i]}`;
+            tableOrder.after(totalCart);
+            let btnOrder = document.createElement("button");
+            btnOrder.classList.add("cart__table_order");
+            btnOrder.textContent = "Cancel the order";
+            totalCart.after(btnOrder);
+
+            btnOrder.addEventListener("click", () => {
+              toolsShopApi
+                .patchData(id, {
+                  currentOrders: [
+                    ...currentOrders.slice(0, i),
+                    ...currentOrders.slice(i + 1),
+                  ],
+                  totalOrders: [
+                    ...totalOrders.slice(0, i),
+                    ...totalOrders.slice(i + 1),
+                  ],
+                  cart: [],
+                  total: 0,
+                })
+                .then((user) => {
+                  alert("Your order has been canceled!");
+                  (0,_helpers__WEBPACK_IMPORTED_MODULE_2__.reloadPage)();
+                });
+            });
+          }
+        }
+      }
+    });
   }
   return null;
 }
@@ -715,6 +915,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _auth_passSingUp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/passSingUp */ "./src/js/auth/passSingUp.js");
 /* harmony import */ var _gridGoods__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gridGoods */ "./src/js/gridGoods.js");
 /* harmony import */ var _tableCart__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tableCart */ "./src/js/tableCart.js");
+/* harmony import */ var _tableOrder__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tableOrder */ "./src/js/tableOrder.js");
+
 
 
 
@@ -730,6 +932,7 @@ document.addEventListener("DOMContentLoaded", () => {
   (0,_auth_passSingUp__WEBPACK_IMPORTED_MODULE_3__.default)();
   (0,_gridGoods__WEBPACK_IMPORTED_MODULE_4__.default)();
   (0,_tableCart__WEBPACK_IMPORTED_MODULE_5__.default)();
+  (0,_tableOrder__WEBPACK_IMPORTED_MODULE_6__.default)();
 
 });
 
