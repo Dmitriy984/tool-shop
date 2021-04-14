@@ -1,7 +1,7 @@
 import { reloadPage } from "../helpers";
 import checkEmailField from "./checkEmailField";
 import ToolsShopApi from "../toolsShopApi";
-import changeCartBlock from "../changeCartBlock";
+import changeCartHeader from "../changeCartHeader";
 import { displayLogoutBlock } from "./displayAuthBlock";
 
 export default function passSingIn() {
@@ -30,8 +30,8 @@ export default function passSingIn() {
         if (password === passwordEntered) {
           displayLogoutBlock(email, id);
           let cartItems = 0;
-          cart.forEach(item => cartItems += item.quantity);
-          changeCartBlock(cartItems, total);
+          cart.forEach((item) => (cartItems += item.quantity));
+          changeCartHeader(cartItems, total);
           toolsShopApi.patchData(id, { isLoggied: true });
           document.cookie = `email=${email}`;
           reloadPage();

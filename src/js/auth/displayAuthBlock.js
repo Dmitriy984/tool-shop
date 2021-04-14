@@ -1,5 +1,5 @@
 import { deleteCookie, reloadPage } from "../helpers";
-import ToolsShopApi from '../toolsShopApi';
+import ToolsShopApi from "../toolsShopApi";
 
 export const headerLogin = document.querySelector(".header__login");
 

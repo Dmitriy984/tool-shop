@@ -121,6 +121,61 @@
       "totalOrders": [],
       "total": 0,
       "isLoggied": false
+    },
+    {
+      "id": 1618422508844,
+      "email": "maxima@gmail.com",
+      "password": "111",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": false
+    },
+    {
+      "id": 1618422778444,
+      "email": "maximan@gmail.com",
+      "password": "555",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": false
+    },
+    {
+      "id": 1618423653899,
+      "email": "maximana@gmail.com",
+      "password": "111",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": false
+    },
+    {
+      "id": 1618423857442,
+      "email": "maxim7@gmail.com",
+      "password": "222",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": false
+    },
+    {
+      "id": 1618426912348,
+      "email": "mick@f.r",
+      "password": "333",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": false
     }
   ],
   "unregUsers": [

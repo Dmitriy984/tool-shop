@@ -23,9 +23,7 @@ export default function passSingUp() {
 
   document.getElementById("show-register").addEventListener("click", () => {
     showCover();
-    form.elements.login.addEventListener("blur", () =>
-      checkEmailField(form.elements.login)
-    );
+    form.elements.login.addEventListener("blur", () => checkEmailField(form.elements.login));
 
     form.addEventListener("submit", () => {
       let valueLogin = form.login.value;

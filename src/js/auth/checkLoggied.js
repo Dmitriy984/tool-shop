@@ -1,4 +1,4 @@
-import changeCartBlock from "../changeCartBlock";
+import changeCartHeader from "../changeCartHeader";
 import ToolsShopApi from "../toolsShopApi";
 import { displayLogoutBlock } from "./displayAuthBlock";
 import { readCookie } from "../helpers";
@@ -14,20 +14,24 @@ export default function checkLoggied() {
       if (typeof user != "undefined" && email === login && isLoggied === true) {
         displayLogoutBlock(email, id);
         let cartItems = 0;
-        cart.forEach(item => {
+        cart.forEach((item) => {
           cartItems += item.quantity;
-          toolsShopApi.getGoods().then(goods => {
+          toolsShopApi.getGoods().then((goods) => {
             let goodCart = goods.find((good) => good.id === item.id);
-            const goodCartIndex = goods.findIndex((good) => good.id === item.id);
+            const goodCartIndex = goods.findIndex(
+              (good) => good.id === item.id
+            );
             if (goodCart && document.getElementById(`${goodCartIndex + 1}`)) {
-              let btnIsGoodCart = document.getElementById(`${goodCartIndex + 1}`);
+              let btnIsGoodCart = document.getElementById(
+                `${goodCartIndex + 1}`
+              );
               btnIsGoodCart.nextElementSibling.innerHTML = `${item.quantity}`;
               btnIsGoodCart.textContent = "Added to Cart";
               btnIsGoodCart.classList.add("good_item_added");
             }
-          })
+          });
         });
-        changeCartBlock(cartItems, total);
+        changeCartHeader(cartItems, total);
       }
     });
   }
