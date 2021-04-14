@@ -31,4 +31,6 @@ export default function checkLoggied() {
       }
     });
   }
+
+  return null;
 }

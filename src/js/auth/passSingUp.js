@@ -1,9 +1,8 @@
 import ToolsShopApi from "../toolsShopApi";
+import checkEmailField from "./checkEmailField";
 
 export default function passSingUp() {
   const toolsShopApi = new ToolsShopApi();
-  const { checkEmail, postUserData } = toolsShopApi;
-
   const form = document.getElementById("registration-form");
   const container = document.getElementById("registration-form-container");
 
@@ -24,10 +23,11 @@ export default function passSingUp() {
 
   document.getElementById("show-register").addEventListener("click", () => {
     showCover();
-    form.elements.login.focus();
-    // form.elements.login.onblur = checkEmailField;
+    form.elements.login.addEventListener("blur", () =>
+      checkEmailField(form.elements.login)
+    );
 
-    form.addEventListener('submit', () => {
+    form.addEventListener("submit", () => {
       let valueLogin = form.login.value;
       let valuePassword = form.password.value;
 
@@ -48,15 +48,17 @@ export default function passSingUp() {
         isLoggied: false,
       };
 
-      checkEmail(valueLogin).then(([user]) => {
+      toolsShopApi.checkEmail(valueLogin).then(([user]) => {
         if (user && user.email === valueLogin) {
           alert("User with this E-mail does exist");
         } else {
-          postUserData(newUser).then((user) =>
-            alert(
-              `You are registered! Sign in to your account using your email ${user.email}`
-            )
-          );
+          toolsShopApi
+            .postUserData(newUser)
+            .then((user) =>
+              alert(
+                `You are registered! Sign in to your account using your email ${user.email}`
+              )
+            );
         }
       });
 
@@ -64,9 +66,9 @@ export default function passSingUp() {
       return false;
     });
 
-    form.cancel.addEventListener('click', () => hideCover());
+    form.cancel.addEventListener("click", () => hideCover());
 
-    document.addEventListener('keydown', e => {
+    document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         hideCover();
       }
@@ -75,14 +77,14 @@ export default function passSingUp() {
     let lastElem = form.elements[form.elements.length - 1];
     let firstElem = form.elements[0];
 
-    lastElem.addEventListener('keydown', (e) => {
+    lastElem.addEventListener("keydown", (e) => {
       if (e.key === "Tab" && !e.shiftKey) {
         firstElem.focus();
         return false;
       }
     });
 
-    firstElem.addEventListener('keydown', (e) => {
+    firstElem.addEventListener("keydown", (e) => {
       if (e.key === "Tab" && e.shiftKey) {
         lastElem.focus();
         return false;
