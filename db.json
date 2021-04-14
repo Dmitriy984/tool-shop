@@ -4,32 +4,10 @@
       "id": 1,
       "email": "max@gmail.com",
       "password": "11111111",
-      "cart": [
-        {
-          "id": 1,
-          "title": "Makita FS6300 Drywall Screwdriver 240V",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56948/58101/5aafb4bce422a700107579ab__31349.1583489852.jpg",
-          "quantity": 1,
-          "price": 105
-        },
-        {
-          "id": 2,
-          "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
-          "quantity": 1,
-          "price": 195
-        },
-        {
-          "id": 5,
-          "title": "Makita BO6050J 6 inch/150mm Random Orbital Sander (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56981/58193/5aafb4ade422a7001075773a__45450.1583489856.jpg",
-          "quantity": 4,
-          "price": 264
-        }
-      ],
+      "cart": [],
       "currentOrders": [],
       "completedOrders": [],
-      "total": 1356,
+      "total": 0,
       "totalOrders": [],
       "isLoggied": true
     },

@@ -3,6 +3,8 @@ import changeCartBlock from "./changeCartBlock";
 import { login } from "./auth/checkLoggied";
 import { reloadPage } from "./helpers";
 import displayMessage from "./displayMessage";
+import removeItemFromCart from "./removeItemFromCart";
+import updateQuantityItem from "./updateQuantityItem";
 
 export default function createTableCart() {
   const toolsShopApi = new ToolsShopApi();
@@ -13,7 +15,14 @@ export default function createTableCart() {
     let thead = document.createElement("thead");
     let tbody = document.createElement("tbody");
     let trTitle = document.createElement("tr");
-    let titles = ["Id", "Product name", "Quantity", "Price", "Action"];
+    let titles = [
+      "Id",
+      "Product name",
+      "Price",
+      "Quantity",
+      "Total cost",
+      "Action",
+    ];
 
     titles.forEach((title) => {
       let th = document.createElement("th");
@@ -44,14 +53,15 @@ export default function createTableCart() {
               let tr = document.createElement("tr");
               let quantityElement =
                 '<i data-subtraction class="far fa-minus-square"></i>' +
-                '  <span>' +
+                "  <span>" +
                 quantity +
-                '</span>  ' +
+                "</span>  " +
                 '<i data-addition class="far fa-plus-square"></i>';
               let deleteElement = `<button class="cart__table_delete" data-action>Delete</button>`;
               let cells = [
                 idx + 1,
                 title,
+                price,
                 quantityElement,
                 `&euro;${price * quantity}`,
                 deleteElement,
@@ -80,33 +90,90 @@ export default function createTableCart() {
               if (action !== undefined) {
                 let tr = e.target.closest("tr");
                 let idxTr = tr.rowIndex - 1;
-                toolsShopApi.getGoodsFromCart(id).then(({cart, total}) => {
+                toolsShopApi.getGoodsFromCart(id).then(({ cart, total }) => {
                   let newTotal =
                     total - cart[idxTr].quantity * cart[idxTr].price;
-                  toolsShopApi
-                    .patchData(id, {
-                      cart: [...cart.slice(0, idxTr), ...cart.slice(idxTr + 1)],
-                      total: newTotal,
-                    })
-                    .then(({ cart }) => {
-                      tr.parentElement.removeChild(tr);
-                      if (cart.length === 0) reloadPage();
-                      totalCart.innerHTML = `Total: &euro;${newTotal}`;
-                      let cartItems = 0;
-                      cart.forEach((item) => (cartItems += item.quantity));
-                      changeCartBlock(cartItems, newTotal);
-                    });
+                  removeItemFromCart(
+                    toolsShopApi,
+                    id,
+                    cart,
+                    newTotal,
+                    tr,
+                    idxTr,
+                    totalCart
+                  );
                 });
               }
 
               if (addition !== undefined) {
-                console.log('Plus');
+                let countItem = e.target.previousElementSibling;
+                let tr = e.target.closest("tr");
+                let tdTotalCost = e.target.closest("td").nextElementSibling;
+                let idxTr = tr.rowIndex - 1;
+                toolsShopApi.getGoodsFromCart(id).then(({ cart, total }) => {
+                  let newQuantity = cart[idxTr].quantity + 1;
+                  let newPrice = cart[idxTr].price * newQuantity;
+                  tdTotalCost.innerHTML = `&euro;${newPrice}`;
+                  const newCartItem = { ...cart[idxTr], quantity: newQuantity };
+                  const newCart = cart.map((item) => {
+                    if (item.id === newCartItem.id) {
+                      return newCartItem;
+                    }
+                    return item;
+                  });
+                  let newTotal = total + cart[idxTr].price;
+                  updateQuantityItem(
+                    toolsShopApi,
+                    id,
+                    newCart,
+                    newTotal,
+                    newQuantity,
+                    countItem,
+                    totalCart
+                  );
+                });
               }
 
               if (subtraction !== undefined) {
-                console.log('Minus');
+                let countItem = e.target.nextElementSibling;
+                let tr = e.target.closest("tr");
+                let tdTotalCost = e.target.closest("td").nextElementSibling;
+                let idxTr = tr.rowIndex - 1;
+                toolsShopApi.getGoodsFromCart(id).then(({ cart, total }) => {
+                  let newQuantity = cart[idxTr].quantity - 1;
+                  let newPrice = cart[idxTr].price * newQuantity;
+                  tdTotalCost.innerHTML = `&euro;${newPrice}`;
+                  const newCartItem = { ...cart[idxTr], quantity: newQuantity };
+                  const newCart = cart.map((item) => {
+                    if (item.id === newCartItem.id) {
+                      return newCartItem;
+                    }
+                    return item;
+                  });
+                  let newTotal = total - cart[idxTr].price;
+                  if (newQuantity !== 0) {
+                    updateQuantityItem(
+                      toolsShopApi,
+                      id,
+                      newCart,
+                      newTotal,
+                      newQuantity,
+                      countItem,
+                      totalCart
+                    );
+                  } else {
+                    removeItemFromCart(
+                      toolsShopApi,
+                      id,
+                      newCart,
+                      newTotal,
+                      tr,
+                      idxTr,
+                      totalCart
+                    );
+                  }
+                });
               }
-
             });
 
             btnOrder.addEventListener("click", () => {

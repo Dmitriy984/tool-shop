@@ -40,6 +40,7 @@ function checkLoggied() {
             const goodCartIndex = goods.findIndex((good) => good.id === item.id);
             if (goodCart && document.getElementById(`${goodCartIndex + 1}`)) {
               let btnIsGoodCart = document.getElementById(`${goodCartIndex + 1}`);
+              btnIsGoodCart.nextElementSibling.innerHTML = `${item.quantity}`;
               btnIsGoodCart.textContent = "Added to Cart";
               btnIsGoodCart.classList.add("good_item_added");
             }
@@ -281,17 +282,17 @@ function passSingUp() {
 
 /***/ }),
 
-/***/ "./src/js/cartBlock.js":
-/*!*****************************!*\
-  !*** ./src/js/cartBlock.js ***!
-  \*****************************/
+/***/ "./src/js/cartHearderBlock.js":
+/*!************************************!*\
+  !*** ./src/js/cartHearderBlock.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ createCartBlock)
+/* harmony export */   "default": () => (/* binding */ createCartHeaderBlock)
 /* harmony export */ });
-function createCartBlock() {
+function createCartHeaderBlock() {
   const headerCart = document.querySelector(".header__cart");
   let spanCart = document.createElement("span");
   let pTotal = document.createElement("p");
@@ -389,6 +390,7 @@ function createGridGoods() {
         btnAddCart.textContent = "Add to Cart";
         let countItem = document.createElement("span");
         countItem.classList.add('goods_item_count');
+        countItem.textContent = '';
 
         div.append(imageItem);
         div.append(titleItem);
@@ -495,6 +497,50 @@ function deleteCookie(name) {
 
 /***/ }),
 
+/***/ "./src/js/removeItemFromCart.js":
+/*!**************************************!*\
+  !*** ./src/js/removeItemFromCart.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ removeItemFromCart)
+/* harmony export */ });
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./src/js/helpers.js");
+/* harmony import */ var _changeCartBlock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./changeCartBlock */ "./src/js/changeCartBlock.js");
+
+
+
+function removeItemFromCart(
+  api,
+  id,
+  cart,
+  total,
+  row,
+  rowId,
+  elemTotal
+) {
+  api
+    .patchData(id, {
+      cart: [...cart.slice(0, rowId), ...cart.slice(rowId + 1)],
+      total: total,
+    })
+    .then(({ cart }) => {
+      row.parentElement.removeChild(row);
+      if (cart.length === 0) {
+        (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.reloadPage)();
+      }
+      elemTotal.innerHTML = `Total: &euro;${total}`;
+      let cartItems = 0;
+      cart.forEach((item) => (cartItems += item.quantity));
+      (0,_changeCartBlock__WEBPACK_IMPORTED_MODULE_1__.default)(cartItems, total);
+    });
+}
+
+
+/***/ }),
+
 /***/ "./src/js/tableCart.js":
 /*!*****************************!*\
   !*** ./src/js/tableCart.js ***!
@@ -510,6 +556,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/checkLoggied */ "./src/js/auth/checkLoggied.js");
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers */ "./src/js/helpers.js");
 /* harmony import */ var _displayMessage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./displayMessage */ "./src/js/displayMessage.js");
+/* harmony import */ var _removeItemFromCart__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./removeItemFromCart */ "./src/js/removeItemFromCart.js");
+/* harmony import */ var _updateQuantityItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./updateQuantityItem */ "./src/js/updateQuantityItem.js");
+
+
 
 
 
@@ -525,7 +575,14 @@ function createTableCart() {
     let thead = document.createElement("thead");
     let tbody = document.createElement("tbody");
     let trTitle = document.createElement("tr");
-    let titles = ["Id", "Product name", "Quantity", "Price", "Action"];
+    let titles = [
+      "Id",
+      "Product name",
+      "Price",
+      "Quantity",
+      "Total cost",
+      "Action",
+    ];
 
     titles.forEach((title) => {
       let th = document.createElement("th");
@@ -556,14 +613,15 @@ function createTableCart() {
               let tr = document.createElement("tr");
               let quantityElement =
                 '<i data-subtraction class="far fa-minus-square"></i>' +
-                '  <span>' +
+                "  <span>" +
                 quantity +
-                '</span>  ' +
+                "</span>  " +
                 '<i data-addition class="far fa-plus-square"></i>';
               let deleteElement = `<button class="cart__table_delete" data-action>Delete</button>`;
               let cells = [
                 idx + 1,
                 title,
+                price,
                 quantityElement,
                 `&euro;${price * quantity}`,
                 deleteElement,
@@ -592,33 +650,90 @@ function createTableCart() {
               if (action !== undefined) {
                 let tr = e.target.closest("tr");
                 let idxTr = tr.rowIndex - 1;
-                toolsShopApi.getGoodsFromCart(id).then(({cart, total}) => {
+                toolsShopApi.getGoodsFromCart(id).then(({ cart, total }) => {
                   let newTotal =
                     total - cart[idxTr].quantity * cart[idxTr].price;
-                  toolsShopApi
-                    .patchData(id, {
-                      cart: [...cart.slice(0, idxTr), ...cart.slice(idxTr + 1)],
-                      total: newTotal,
-                    })
-                    .then(({ cart }) => {
-                      tr.parentElement.removeChild(tr);
-                      if (cart.length === 0) (0,_helpers__WEBPACK_IMPORTED_MODULE_3__.reloadPage)();
-                      totalCart.innerHTML = `Total: &euro;${newTotal}`;
-                      let cartItems = 0;
-                      cart.forEach((item) => (cartItems += item.quantity));
-                      (0,_changeCartBlock__WEBPACK_IMPORTED_MODULE_1__.default)(cartItems, newTotal);
-                    });
+                  (0,_removeItemFromCart__WEBPACK_IMPORTED_MODULE_5__.default)(
+                    toolsShopApi,
+                    id,
+                    cart,
+                    newTotal,
+                    tr,
+                    idxTr,
+                    totalCart
+                  );
                 });
               }
 
               if (addition !== undefined) {
-                console.log('Plus');
+                let countItem = e.target.previousElementSibling;
+                let tr = e.target.closest("tr");
+                let tdTotalCost = e.target.closest("td").nextElementSibling;
+                let idxTr = tr.rowIndex - 1;
+                toolsShopApi.getGoodsFromCart(id).then(({ cart, total }) => {
+                  let newQuantity = cart[idxTr].quantity + 1;
+                  let newPrice = cart[idxTr].price * newQuantity;
+                  tdTotalCost.innerHTML = `&euro;${newPrice}`;
+                  const newCartItem = { ...cart[idxTr], quantity: newQuantity };
+                  const newCart = cart.map((item) => {
+                    if (item.id === newCartItem.id) {
+                      return newCartItem;
+                    }
+                    return item;
+                  });
+                  let newTotal = total + cart[idxTr].price;
+                  (0,_updateQuantityItem__WEBPACK_IMPORTED_MODULE_6__.default)(
+                    toolsShopApi,
+                    id,
+                    newCart,
+                    newTotal,
+                    newQuantity,
+                    countItem,
+                    totalCart
+                  );
+                });
               }
 
               if (subtraction !== undefined) {
-                console.log('Minus');
+                let countItem = e.target.nextElementSibling;
+                let tr = e.target.closest("tr");
+                let tdTotalCost = e.target.closest("td").nextElementSibling;
+                let idxTr = tr.rowIndex - 1;
+                toolsShopApi.getGoodsFromCart(id).then(({ cart, total }) => {
+                  let newQuantity = cart[idxTr].quantity - 1;
+                  let newPrice = cart[idxTr].price * newQuantity;
+                  tdTotalCost.innerHTML = `&euro;${newPrice}`;
+                  const newCartItem = { ...cart[idxTr], quantity: newQuantity };
+                  const newCart = cart.map((item) => {
+                    if (item.id === newCartItem.id) {
+                      return newCartItem;
+                    }
+                    return item;
+                  });
+                  let newTotal = total - cart[idxTr].price;
+                  if (newQuantity !== 0) {
+                    (0,_updateQuantityItem__WEBPACK_IMPORTED_MODULE_6__.default)(
+                      toolsShopApi,
+                      id,
+                      newCart,
+                      newTotal,
+                      newQuantity,
+                      countItem,
+                      totalCart
+                    );
+                  } else {
+                    (0,_removeItemFromCart__WEBPACK_IMPORTED_MODULE_5__.default)(
+                      toolsShopApi,
+                      id,
+                      newCart,
+                      newTotal,
+                      tr,
+                      idxTr,
+                      totalCart
+                    );
+                  }
+                });
               }
-
             });
 
             btnOrder.addEventListener("click", () => {
@@ -691,7 +806,7 @@ function createTableOrder() {
             let thead = document.createElement("thead");
             let tbody = document.createElement("tbody");
             let trTitle = document.createElement("tr");
-            let titles = ["Id", "Product name", "Quantity", "Price"];
+            let titles = ['Id', 'Product name', 'Price', 'Quantity', 'Total coast'];
 
             titles.forEach((title) => {
               let th = document.createElement("th");
@@ -709,6 +824,7 @@ function createTableOrder() {
               let cells = [
                 idx + 1,
                 title,
+                `&euro;${price}`,
                 quantity,
                 `&euro;${price * quantity}`,
               ];
@@ -742,7 +858,7 @@ function createTableOrder() {
                   cart: [],
                   total: 0,
                 })
-                .then((user) => {
+                .then(() => {
                   alert("Your order has been canceled!");
                   (0,_helpers__WEBPACK_IMPORTED_MODULE_2__.reloadPage)();
                 });
@@ -844,6 +960,45 @@ class ToolsShopApi {
 }
 
 
+/***/ }),
+
+/***/ "./src/js/updateQuantityItem.js":
+/*!**************************************!*\
+  !*** ./src/js/updateQuantityItem.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ updateQuantityItem)
+/* harmony export */ });
+/* harmony import */ var _changeCartBlock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./changeCartBlock */ "./src/js/changeCartBlock.js");
+
+
+function updateQuantityItem(
+  api,
+  id,
+  cart,
+  total,
+  quantity,
+  elemCount,
+  elemTotal
+) {
+  api
+    .patchData(id, {
+      cart: cart,
+      total: total,
+    })
+    .then(({ cart }) => {
+      elemCount.textContent = `${quantity}`;
+      elemTotal.innerHTML = `Total: &euro;${total}`;
+      let cartItems = 0;
+      cart.forEach((item) => (cartItems += item.quantity));
+      (0,_changeCartBlock__WEBPACK_IMPORTED_MODULE_0__.default)(cartItems, total);
+    });
+}
+
+
 /***/ })
 
 /******/ 	});
@@ -909,7 +1064,7 @@ var __webpack_exports__ = {};
   !*** ./src/js/index.js ***!
   \*************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _cartBlock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cartBlock */ "./src/js/cartBlock.js");
+/* harmony import */ var _cartHearderBlock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cartHearderBlock */ "./src/js/cartHearderBlock.js");
 /* harmony import */ var _auth_checkLoggied__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth/checkLoggied */ "./src/js/auth/checkLoggied.js");
 /* harmony import */ var _auth_passSingIn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/passSingIn */ "./src/js/auth/passSingIn.js");
 /* harmony import */ var _auth_passSingUp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/passSingUp */ "./src/js/auth/passSingUp.js");
@@ -926,7 +1081,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  (0,_cartBlock__WEBPACK_IMPORTED_MODULE_0__.default)();
+  (0,_cartHearderBlock__WEBPACK_IMPORTED_MODULE_0__.default)();
   (0,_auth_checkLoggied__WEBPACK_IMPORTED_MODULE_1__.default)();
   (0,_auth_passSingIn__WEBPACK_IMPORTED_MODULE_2__.default)();
   (0,_auth_passSingUp__WEBPACK_IMPORTED_MODULE_3__.default)();

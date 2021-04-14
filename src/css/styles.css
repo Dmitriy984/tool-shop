@@ -88,7 +88,8 @@ footer {
 .header__login button:hover,
 .fa-minus-square:hover,
 .fa-plus-square:hover,
-.cart__table_delete:hover {
+.cart__table_delete:hover,
+.header__logout button:hover {
     cursor: pointer;
 }
 
@@ -182,9 +183,10 @@ footer {
 }
 
 .goods_item_count {
+    top: 6px;
     display: inline-block;
     margin: auto;
-    font-size: 1.5vw;
+    font-size: 2vw;
     color: blue;
 }
 
@@ -215,7 +217,7 @@ footer {
 
 .cart__table,
 .order__tables {
-    width: 70vw;
+    width: 80vw;
     margin: 5vw auto;
 }
 

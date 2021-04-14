@@ -21,6 +21,7 @@ export default function checkLoggied() {
             const goodCartIndex = goods.findIndex((good) => good.id === item.id);
             if (goodCart && document.getElementById(`${goodCartIndex + 1}`)) {
               let btnIsGoodCart = document.getElementById(`${goodCartIndex + 1}`);
+              btnIsGoodCart.nextElementSibling.innerHTML = `${item.quantity}`;
               btnIsGoodCart.textContent = "Added to Cart";
               btnIsGoodCart.classList.add("good_item_added");
             }

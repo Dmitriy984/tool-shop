@@ -24,7 +24,7 @@ export default function createTableOrder() {
             let thead = document.createElement("thead");
             let tbody = document.createElement("tbody");
             let trTitle = document.createElement("tr");
-            let titles = ["Id", "Product name", "Quantity", "Price"];
+            let titles = ['Id', 'Product name', 'Price', 'Quantity', 'Total coast'];
 
             titles.forEach((title) => {
               let th = document.createElement("th");
@@ -42,6 +42,7 @@ export default function createTableOrder() {
               let cells = [
                 idx + 1,
                 title,
+                `&euro;${price}`,
                 quantity,
                 `&euro;${price * quantity}`,
               ];
@@ -75,7 +76,7 @@ export default function createTableOrder() {
                   cart: [],
                   total: 0,
                 })
-                .then((user) => {
+                .then(() => {
                   alert("Your order has been canceled!");
                   reloadPage();
                 });

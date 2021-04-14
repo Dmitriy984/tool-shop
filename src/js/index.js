@@ -1,4 +1,4 @@
-import createCartBlock from './cartBlock';
+import createCartHeaderBlock from './cartHearderBlock';
 import checkLoggied from './auth/checkLoggied';
 import passSingIn from './auth/passSingIn';
 import passSingUp from './auth/passSingUp';
@@ -8,7 +8,7 @@ import createTableOrder from './tableOrder';
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  createCartBlock();
+  createCartHeaderBlock();
   checkLoggied();
   passSingIn();
   passSingUp();

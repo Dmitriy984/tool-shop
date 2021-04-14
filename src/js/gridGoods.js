@@ -25,6 +25,7 @@ export default function createGridGoods() {
         btnAddCart.textContent = "Add to Cart";
         let countItem = document.createElement("span");
         countItem.classList.add('goods_item_count');
+        countItem.textContent = '';
 
         div.append(imageItem);
         div.append(titleItem);
