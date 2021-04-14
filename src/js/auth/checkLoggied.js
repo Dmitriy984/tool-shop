@@ -13,9 +13,7 @@ export default function checkLoggied() {
       const { id, email, isLoggied, cart, total } = user;
       if (typeof user != "undefined" && email === login && isLoggied === true) {
         displayLogoutBlock(email, id);
-        let cartItems = 0;
         cart.forEach((item) => {
-          cartItems += item.quantity;
           toolsShopApi.getGoods().then((goods) => {
             let goodCart = goods.find((good) => good.id === item.id);
             const goodCartIndex = goods.findIndex(
@@ -31,7 +29,7 @@ export default function checkLoggied() {
             }
           });
         });
-        changeCartHeader(cartItems, total);
+        changeCartHeader(cart, total);
       }
     });
   }

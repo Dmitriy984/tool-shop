@@ -29,9 +29,7 @@ export default function passSingIn() {
         const { id, email, password, cart, total } = user;
         if (password === passwordEntered) {
           displayLogoutBlock(email, id);
-          let cartItems = 0;
-          cart.forEach((item) => (cartItems += item.quantity));
-          changeCartHeader(cartItems, total);
+          changeCartHeader(cart, total);
           toolsShopApi.patchData(id, { isLoggied: true });
           document.cookie = `email=${email}`;
           reloadPage();
