@@ -1,4 +1,4 @@
-import ToolsShopApi from "../toolsShopApi";
+import ToolsShopApi from "../api/toolsShopApi";
 import checkEmailField from "./checkEmailField";
 
 export default function passSingUp() {

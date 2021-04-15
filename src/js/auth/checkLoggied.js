@@ -1,7 +1,7 @@
-import changeCartHeader from "../changeCartHeader";
-import ToolsShopApi from "../toolsShopApi";
+import changeCartHeader from "../cart/changeCartHeader";
+import ToolsShopApi from "../api/toolsShopApi";
 import { displayLogoutBlock } from "./displayAuthBlock";
-import { readCookie } from "../helpers";
+import { readCookie } from "../utils/helpers";
 
 export let login = readCookie("email");
 
@@ -11,7 +11,7 @@ export default function checkLoggied() {
   if (login) {
     toolsShopApi.checkEmail(login).then(([user]) => {
       const { id, email, isLoggied, cart, total } = user;
-      if (typeof user != "undefined" && email === login && isLoggied === true) {
+      if (typeof user != "undefined" && isLoggied === true) {
         displayLogoutBlock(email, id);
         cart.forEach((item) => {
           toolsShopApi.getGoods().then((goods) => {

@@ -5,11 +5,70 @@
       "email": "max@gmail.com",
       "password": "11111111",
       "cart": [],
-      "currentOrders": [],
+      "currentOrders": [
+        [
+          {
+            "id": 1,
+            "title": "Makita FS6300 Drywall Screwdriver 240V",
+            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56948/58101/5aafb4bce422a700107579ab__31349.1583489852.jpg",
+            "quantity": 3,
+            "price": 105
+          },
+          {
+            "id": 3,
+            "title": "Makita HG6531CK Heat Gun 1400W 110V",
+            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/62071/75818/5da978f591b03b1306000055__17528.1583490480.jpg",
+            "quantity": 4,
+            "price": 120
+          }
+        ],
+        [
+          {
+            "id": 4,
+            "title": "Makita HP2070 13mm 2-Speed Percussion Drill 110V",
+            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56833/77644/file-input-1580313697428__60553.1583489835.jpg",
+            "quantity": 3,
+            "price": 180
+          },
+          {
+            "id": 5,
+            "title": "Makita BO6050J 6 inch/150mm Random Orbital Sander (110V)",
+            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56981/58193/5aafb4ade422a7001075773a__45450.1583489856.jpg",
+            "quantity": 3,
+            "price": 264
+          },
+          {
+            "id": 2,
+            "title": "Makita VC2012L L Class Wet & Dry Dust Extractor 20L (110V)",
+            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56629/56927/5aafb4cde422a70010757c42__61664.1584098348.jpg",
+            "quantity": 4,
+            "price": 195
+          },
+          {
+            "id": 6,
+            "title": "Bosch GLL 3-50LBX Red Self Levelling Line Laser with L-Boxx",
+            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/58977/65865/5aafb42fe422a70010756707__05244.1583490093.jpg",
+            "quantity": 4,
+            "price": 255
+          }
+        ]
+      ],
       "completedOrders": [],
       "total": 0,
-      "totalOrders": [],
-      "isLoggied": false
+      "totalOrders": [
+        795,
+        3132
+      ],
+      "isLoggied": true,
+      "currentOrderNumbers": [
+        1618521615016,
+        1618521629258
+      ],
+      "currentOrderDates": [
+        "2021-04-15T21:20:15.016Z",
+        "2021-04-15T21:20:29.258Z"
+      ],
+      "htmlPage": "index.html"
     },
     {
       "id": 2,

@@ -1,7 +1,7 @@
-import { reloadPage } from "../helpers";
+import { reloadPage } from "../utils/helpers";
 import checkEmailField from "./checkEmailField";
-import ToolsShopApi from "../toolsShopApi";
-import changeCartHeader from "../changeCartHeader";
+import ToolsShopApi from "../api/toolsShopApi";
+import changeCartHeader from "../cart/changeCartHeader";
 import { displayLogoutBlock } from "./displayAuthBlock";
 
 export default function passSingIn() {

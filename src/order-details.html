@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tool Shop Cart</title>
+    <link type="image/x-icon" rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<section id="page">
+    <header>
+        <div class="header__logo"><a href="index.html">TOOL SHOP</a></div>
+        <div class="header__address">Address</div>
+        <div class="header__call">
+            <ul>
+                <li><span class="header__call_phone">+7 (499) 567-78-65</span></li>
+                <li><span class="header__call_phone">8 800 570-77-77</span>
+                    <div class="header__call_phone_notice">Звонок бесплатный
+                        <span class="header__call_worktime">&nbsp;05:00 – 22:00</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="header__login">
+            <form>
+                <div>
+                    <label for="login">E-mail</label>
+                    <input type="text" name="login" class="header__login_input" id="login" tabindex="1"
+                           autocomplete="username">
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="header__login_input" id="password" tabindex="2"
+                           autocomplete="current-password">
+                </div>
+                <input type="submit" value="Sing In" class="header__login_input">
+            </form>
+            <button id="show-register">Sing Up</button>
+        </div>
+        <div class="header__cart"></div>
+
+        <div id="registration-form-container">
+            <form id="registration-form">
+                <div>Registration Form</div>
+                <label for="reg-login">E-mail</label>
+                <input name="login" type="text" id="reg-login">
+                <label for="reg-password">Password</label>
+                <input name="password" type="password" id="reg-password">
+                <input type="submit" value="Ok">
+                <input type="button" name="cancel" value="Cancel">
+            </form>
+        </div>
+    </header>
+    <nav>Navigation</nav>
+    <main>
+        <div class="order__tables"></div>
+    </main>
+    <footer>Footer</footer>
+</section>
+
+<script src="../js/bundle.js"></script>
+</body>
+</html>

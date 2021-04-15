@@ -1,10 +1,10 @@
-import createCartHeader from "./createCartHeader";
+import createCartHeader from "./cart/createCartHeader";
 import checkLoggied from "./auth/checkLoggied";
 import passSingIn from "./auth/passSingIn";
 import passSingUp from "./auth/passSingUp";
 import createGridGoods from "./createGridGoods";
-import createTableCart from "./createTableCart";
-import createTableOrder from "./createTableOrder";
+import createCartTable from "./cart/createCartTable";
+import createOrderTable from "./orders/createOrderTable";
 
 document.addEventListener("DOMContentLoaded", () => {
   createCartHeader();
@@ -12,6 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   passSingIn();
   passSingUp();
   createGridGoods();
-  createTableCart();
-  createTableOrder();
+  createCartTable();
+  createOrderTable();
 });
