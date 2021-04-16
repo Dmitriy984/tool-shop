@@ -4,7 +4,22 @@
       "id": 1,
       "email": "max@gmail.com",
       "password": "11111111",
-      "cart": [],
+      "cart": [
+        {
+          "id": 5,
+          "title": "Makita BO6050J 6 inch/150mm Random Orbital Sander (110V)",
+          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56981/58193/5aafb4ade422a7001075773a__45450.1583489856.jpg",
+          "quantity": 3,
+          "price": 264
+        },
+        {
+          "id": 4,
+          "title": "Makita HP2070 13mm 2-Speed Percussion Drill 110V",
+          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56833/77644/file-input-1580313697428__60553.1583489835.jpg",
+          "quantity": 2,
+          "price": 180
+        }
+      ],
       "currentOrders": [
         [
           {
@@ -24,7 +39,7 @@
         ]
       ],
       "completedOrders": [],
-      "total": 0,
+      "total": 1152,
       "totalOrders": [
         780
       ],

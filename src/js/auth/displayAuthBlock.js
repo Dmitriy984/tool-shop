@@ -18,7 +18,7 @@ export function displayLogoutBlock(login, id) {
   span.textContent = `${login}`;
   div.append(btn);
   btn.textContent = "Sing Out";
-  pOrders.innerHTML = `<a href="orders.html">Your Orders</a>`;
+  pOrders.innerHTML = `<a href="orders.html">Orders</a>`;
   div.append(pOrders);
 
   btn.addEventListener("click", () => {

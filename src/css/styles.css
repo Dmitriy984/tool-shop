@@ -3,10 +3,14 @@
 
 @font-face {
     font-family: 'Conv_LSANS';
-    src: url('fonts/LSANS.eot');
-    src: local('☺'), url('fonts/LSANS.woff') format('woff'), url('fonts/LSANS.ttf') format('truetype'), url('fonts/LSANS.svg') format('svg');
+    src: url('../fonts/LSANS.eot');
+    src: local('☺'), url('../fonts/LSANS.woff') format('woff'), url('../fonts/LSANS.ttf') format('truetype'), url('../fonts/LSANS.svg') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+
+body {
+    background: linear-gradient(#c0c7c5, #E8D9A9) fixed;
 }
 
 #page {
@@ -20,7 +24,7 @@
 }
 
 header {
-    background-color: lime;
+    background: linear-gradient(to top, #eec9a1 20%, #e4e4d8 50%, #c2b7a1 80%);
     grid-area: head;
     display: flex;
     flex-direction: row;
@@ -31,7 +35,7 @@ header {
 }
 
 nav {
-    background-color: lightblue;
+    background-color: #b9bcbd;
     grid-area: nav;
 }
 
@@ -40,7 +44,7 @@ main {
 }
 
 footer {
-    background-color: red;
+    background-color: #00fff7;
     grid-area: foot;
 }
 
@@ -171,6 +175,7 @@ footer {
     padding: .1em;
     background: #a8e3de;
     text-align: center;
+    border-radius: 5px;
 }
 
 .goods_item img {
@@ -209,6 +214,7 @@ footer {
     font-weight: bold;
     margin: .35em 1em;
     border-radius: 5px;
+    box-shadow: 1px 2px 2px dimgrey;
 }
 
 .good_item_added {
@@ -227,7 +233,7 @@ footer {
 
 .cart__table table,
 .order__blocks table,
-.order__details table{
+.order__details table {
     position: relative;
     width: 100%;
     font-family: 'Conv_LSANS', Sans-Serif;
@@ -326,7 +332,7 @@ tr td:last-child {
     border: 1px solid #0f7f7f;
     border-radius: 5px;
     margin-bottom: 3rem;
-    box-shadow: 2px 2px 1px #6defc9;
+    box-shadow: 2px 2px 2px #6defc9;
     align-content: center;
 }
 
@@ -342,6 +348,7 @@ tr td:last-child {
 
 .order__grid_list {
     padding: 5px 10px;
+    background-color: antiquewhite;
 }
 
 .order__blocks_total {
