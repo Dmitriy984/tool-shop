@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
 @font-face {
     font-family: 'Conv_LSANS';
     src: url('fonts/LSANS.eot');
@@ -89,7 +91,8 @@ footer {
 .fa-minus-square:hover,
 .fa-plus-square:hover,
 .cart__table_delete:hover,
-.header__logout button:hover {
+.header__logout button:hover,
+.order__grid_number:hover {
     cursor: pointer;
 }
 
@@ -216,13 +219,15 @@ footer {
 /*----------------------------------- tableCart ---------------------------*/
 
 .cart__table,
-.order__tables {
+.order__blocks,
+.order__details {
     width: 80vw;
-    margin: 5vw auto;
+    margin: 4vw auto;
 }
 
 .cart__table table,
-.order__tables table {
+.order__blocks table,
+.order__details table{
     position: relative;
     width: 100%;
     font-family: 'Conv_LSANS', Sans-Serif;
@@ -268,7 +273,8 @@ tr td:last-child {
 }
 
 .cart__table_message,
-.order__tables_message {
+.order__blocks_message,
+.order__details_message {
     text-align: center;
     font-size: 20px;
     color: red;
@@ -296,12 +302,50 @@ tr td:last-child {
 }
 
 .cart__table_total,
-.order__tables_total {
+.order__blocks_total,
+.order__details_total {
     text-align: right;
     font-size: 20px;
     font-weight: bold;
     margin-top: 7px;
     margin-bottom: 0;
+}
+
+.order__blocks_title {
+    font-family: 'Kaushan Script', cursive;
+    color: #0f7f7f;
+    font-size: 35px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.order__grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #0f7f7f;
+    border-radius: 5px;
+    margin-bottom: 3rem;
+    box-shadow: 2px 2px 1px #6defc9;
+    align-content: center;
+}
+
+.order__grid_number {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #a8e3de;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.order__grid_list {
+    padding: 5px 10px;
+}
+
+.order__blocks_total {
+    margin-top: 0;
 }
 
 

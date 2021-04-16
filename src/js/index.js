@@ -4,7 +4,8 @@ import passSingIn from "./auth/passSingIn";
 import passSingUp from "./auth/passSingUp";
 import createGridGoods from "./createGridGoods";
 import createCartTable from "./cart/createCartTable";
-import createOrderTable from "./orders/createOrderTable";
+import createOrderBlocks from "./orders/createOrderBlocks";
+import createOrderDetails from "./orders/orderDetails";
 
 document.addEventListener("DOMContentLoaded", () => {
   createCartHeader();
@@ -13,5 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   passSingUp();
   createGridGoods();
   createCartTable();
-  createOrderTable();
+  createOrderBlocks();
+  createOrderDetails();
 });
