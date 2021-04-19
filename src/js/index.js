@@ -6,6 +6,7 @@ import createGoodsGrid from "./goodsGrid/createGoodsGrid";
 import createCartTable from "./cart/createCartTable";
 import createOrderBlocks from "./orders/createOrderBlocks";
 import createOrderDetails from "./orders/orderDetails";
+import '../scss/main.scss';
 
 document.addEventListener("DOMContentLoaded", () => {
   createHeader();

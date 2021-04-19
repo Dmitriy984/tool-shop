@@ -1,17 +1,15 @@
-const webpack = require('webpack');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const webpack = require('webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
   mode: "development",
-  entry: {
-    'js/script.js': './src/js/index.js', // scripts
-    '': './src/css/styles.css' //styles
-  },
+  entry: [path.resolve('./src/js/index.js'),
+  './src/scss/main.scss'],
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "[name]",
+    filename: "bundle.js",
   },
   optimization: {
     splitChunks: {
@@ -59,22 +57,21 @@ module.exports = {
           },
         ],
       },
-
-      //  Loading CSS
+      //  Loading JS/JSX
       {
-        test: /\.(css)$/i,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+
+      //  Loading SASS/SCSS
+      {
+        test: /\.s[ac]ss$/i,
         use: [
-          "style-loader",
-          {
-            loader: "file-loader",
-            options: {
-              outputPath: "css",
-              name: "[name].[ext]",
-            },
-          }
-          // "css-loader",
-          // "postcss-loader",
-          // "sass-loader",
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'resolve-url-loader',
+          'sass-loader'
         ],
       },
     ],
@@ -95,8 +92,11 @@ module.exports = {
       template: "src/order-details.html",
       filename: "order-details.html",
     }),
-    // new MiniCssExtractPlugin({
-    //   filename: "[name]-[hash:8].css",
-    // }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "[name]-[hash:8].css",
+      chunkFilename: "[id].css",
+    }),
   ],
 };
