@@ -1,18 +1,18 @@
-import createCartHeader from "./cart/createCartHeader";
+import createHeader from "./header/createHeader";
 import checkLoggied from "./auth/checkLoggied";
 import passSingIn from "./auth/passSingIn";
 import passSingUp from "./auth/passSingUp";
-import createGridGoods from "./createGridGoods";
+import createGoodsGrid from "./goodsGrid/createGoodsGrid";
 import createCartTable from "./cart/createCartTable";
 import createOrderBlocks from "./orders/createOrderBlocks";
 import createOrderDetails from "./orders/orderDetails";
 
 document.addEventListener("DOMContentLoaded", () => {
-  createCartHeader();
+  createHeader();
   checkLoggied();
   passSingIn();
   passSingUp();
-  createGridGoods();
+  createGoodsGrid();
   createCartTable();
   createOrderBlocks();
   createOrderDetails();

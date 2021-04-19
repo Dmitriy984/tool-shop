@@ -18,13 +18,12 @@ body {
     width: 100%;
     min-height: 1200px;
     grid-template: [header-left] "head head" 110px [header-right]
-                 [main-left]   "nav  main" 1fr  [main-right]
-                 [footer-left] "foot  foot" 60px [footer-right]
-                 / 140px 1fr;
+                   [main-left]   "nav  main" 1fr  [main-right]
+                   [footer-left] "foot  foot" 60px [footer-right]
+                   / 140px 1fr;
 }
 
 header {
-    background: linear-gradient(to top, #eec9a1 20%, #e4e4d8 50%, #c2b7a1 80%);
     grid-area: head;
     display: flex;
     flex-direction: row;
@@ -32,11 +31,13 @@ header {
     align-content: center;
     align-items: center;
     padding: 13px 30px;
+    background: linear-gradient(to top, #eec9a1 20%, #e4e4d8 50%, #c2b7a1 80%);
+
 }
 
 nav {
-    background-color: #b9bcbd;
     grid-area: nav;
+    background-color: #b9bcbd;
 }
 
 main {
@@ -44,15 +45,18 @@ main {
 }
 
 footer {
-    background-color: #00fff7;
     grid-area: foot;
+    display: table;
+    background-color: #00fff7;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .header__logo > a {
+    color: black;
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
     text-decoration: none;
-    color: black;
 }
 
 .header__call > ul {
@@ -62,8 +66,8 @@ footer {
 }
 
 .header__call_phone {
-    font-size: 1.5rem;
     color: red;
+    font-size: 1.5rem;
 }
 
 .header__call_worktime {
@@ -74,17 +78,12 @@ footer {
     align-self: flex-start;
 }
 
-.header__login form {
-    display: block;
-}
-
 .header__login_input {
     margin: 0 3px 3px 3px;
     border-radius: 5px;
 }
 
 .header__login button {
-    display: block;
     border-radius: 5px;
     margin: 0 3px;
 }
@@ -108,19 +107,20 @@ footer {
 
 #registration-form {
     display: inline-block;
-    padding: 10px 10px;
     min-width: 200px;
+    padding: 30px 20px;
     border: 1px solid black;
+    border-radius: 5px;
     background: #C3E0E5;
     vertical-align: middle;
 }
 
 #registration-form-container {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 9999;
-    display: none;
     width: 100%;
     height: 100%;
     text-align: center;
@@ -145,14 +145,14 @@ footer {
 }
 
 #registration-form input[name="text"] {
+    width: 180px;
     display: block;
     margin: 5px;
-    width: 180px;
 }
 
 .header__logout span {
-    color: red;
     margin-right: 1vw;
+    color: red;
 }
 
 .header__cart p {
@@ -171,11 +171,11 @@ footer {
 }
 
 #grid > div {
-    font-size: 1.3vw;
     padding: .1em;
+    border-radius: 5px;
     background: #a8e3de;
     text-align: center;
-    border-radius: 5px;
+    font-size: 1.3vw;
 }
 
 .goods_item img {
@@ -192,34 +192,31 @@ footer {
 
 .goods_item_count {
     top: 6px;
-    display: inline-block;
-    margin: auto;
-    font-size: 2vw;
     color: blue;
+    font-size: 2vw;
 }
 
 .goods_item p {
-    display: inline-block;
     float: left;
+    margin: 0;
+    padding: .5em 1em;
     font-size: 1.5vw;
     font-weight: bold;
-    padding: .5em 1em;
-    margin: 0;
 }
 
+
 .goods_item button {
-    display: inline-block;
     float: right;
-    font-size: 1.5vw;
-    font-weight: bold;
     margin: .35em 1em;
     border-radius: 5px;
     box-shadow: 1px 2px 2px dimgrey;
+    font-size: 1.5vw;
+    font-weight: bold;
 }
 
 .good_item_added {
-    color: white;
     background-color: #0f7f7f;
+    color: white;
 }
 
 /*----------------------------------- tableCart ---------------------------*/
@@ -236,44 +233,52 @@ footer {
 .order__details table {
     position: relative;
     width: 100%;
-    font-family: 'Conv_LSANS', Sans-Serif;
-    font-size: 16px;
     border-radius: 10px;
     border-spacing: 0;
     text-align: center;
+    font-family: 'Conv_LSANS', Sans-Serif;
+    font-size: 16px;
 }
 
 th {
+    padding: 10px 20px;
     background: #3bbf98;
     color: white;
     text-shadow: 0 1px 1px #2D2020;
-    padding: 10px 20px;
 }
+
 th, td {
     border-style: solid;
     border-width: 0 1px 1px 0;
     border-color: white;
 }
+
 th:first-child, td:first-child {
     text-align: left;
 }
+
 th:first-child {
     border-top-left-radius: 10px;
 }
+
 th:last-child {
     border-top-right-radius: 10px;
     border-right: none;
 }
+
 td {
     padding: 10px 20px;
     background: #F8E391;
 }
+
 tr:last-child td:first-child {
     border-radius: 0 0 0 10px;
 }
+
 tr:last-child td:last-child {
     border-radius: 0 0 10px 0;
 }
+
 tr td:last-child {
     border-right: none;
 }
@@ -282,8 +287,8 @@ tr td:last-child {
 .order__blocks_message,
 .order__details_message {
     text-align: center;
-    font-size: 20px;
     color: red;
+    font-size: 20px;
 }
 
 .far {
@@ -300,50 +305,50 @@ tr td:last-child {
 
 .cart__table_order {
     display: block;
-    font-size: 18px;
-    color: red;
-    border-radius: 5px;
     margin: 0 auto 5vw;
+    border-radius: 5px;
     box-shadow: 1px 2px 3px dimgrey;
+    color: red;
+    font-size: 18px;
 }
 
 .cart__table_total,
 .order__blocks_total,
 .order__details_total {
+    margin-top: 7px;
+    margin-bottom: 0;
     text-align: right;
     font-size: 20px;
     font-weight: bold;
-    margin-top: 7px;
-    margin-bottom: 0;
 }
 
 .order__blocks_title {
-    font-family: 'Kaushan Script', cursive;
-    color: #0f7f7f;
-    font-size: 35px;
     margin: 0 auto 2rem;
     text-align: center;
+    color: #0f7f7f;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 35px;
     font-weight: bold;
 }
 
 .order__grid {
     display: flex;
     flex-direction: column;
+    align-content: center;
+    margin-bottom: 3rem;
     border: 1px solid #0f7f7f;
     border-radius: 5px;
-    margin-bottom: 3rem;
     box-shadow: 2px 2px 2px #6defc9;
-    align-content: center;
 }
 
 .order__grid_number {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 5px 10px;
     background-color: #a8e3de;
     font-size: 18px;
     font-weight: bold;
-    padding: 5px 10px;
 }
 
 .order__grid_list {

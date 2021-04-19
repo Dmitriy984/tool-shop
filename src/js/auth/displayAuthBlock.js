@@ -1,12 +1,10 @@
 import { deleteCookie, reloadPage } from "../utils/helpers";
 import ToolsShopApi from "../api/toolsShopApi";
-
-export const headerLogin = document.querySelector(".header__login");
+import {loginHeader} from "../header/createLoginHeader";
 
 export function displayLogoutBlock(login, id) {
   const toolsShopApi = new ToolsShopApi();
-
-  headerLogin.style.display = "none";
+  loginHeader.style.display = "none";
   let div = document.createElement("div");
   div.classList.add("header__logout");
   let span = document.createElement("span");
@@ -31,6 +29,6 @@ export function displayLogoutBlock(login, id) {
 
 export function displayLoginBlock() {
   let headerLogout = document.querySelector(".header__logout");
-  headerLogin.style.display = "";
+  loginHeader.style.display = "";
   headerLogout.remove();
 }

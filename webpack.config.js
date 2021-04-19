@@ -59,9 +59,10 @@ module.exports = {
           },
         ],
       },
-      //  Loading SASS/SCSS/CSS
+
+      //  Loading CSS
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.(css)$/i,
         use: [
           "style-loader",
           {

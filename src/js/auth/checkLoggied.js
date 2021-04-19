@@ -1,4 +1,4 @@
-import changeCartHeader from "../cart/changeCartHeader";
+import changeCartHeader from "../header/changeCartHeader";
 import ToolsShopApi from "../api/toolsShopApi";
 import { displayLogoutBlock } from "./displayAuthBlock";
 import { readCookie } from "../utils/helpers";

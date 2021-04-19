@@ -4,52 +4,14 @@
       "id": 1,
       "email": "max@gmail.com",
       "password": "11111111",
-      "cart": [
-        {
-          "id": 5,
-          "title": "Makita BO6050J 6 inch/150mm Random Orbital Sander (110V)",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56981/58193/5aafb4ade422a7001075773a__45450.1583489856.jpg",
-          "quantity": 3,
-          "price": 264
-        },
-        {
-          "id": 4,
-          "title": "Makita HP2070 13mm 2-Speed Percussion Drill 110V",
-          "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56833/77644/file-input-1580313697428__60553.1583489835.jpg",
-          "quantity": 2,
-          "price": 180
-        }
-      ],
-      "currentOrders": [
-        [
-          {
-            "id": 1,
-            "title": "Makita FS6300 Drywall Screwdriver 240V",
-            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/56948/58101/5aafb4bce422a700107579ab__31349.1583489852.jpg",
-            "quantity": 4,
-            "price": 105
-          },
-          {
-            "id": 3,
-            "title": "Makita HG6531CK Heat Gun 1400W 110V",
-            "image": "https://cdn11.bigcommerce.com/s-7holhynnib/images/stencil/original/products/62071/75818/5da978f591b03b1306000055__17528.1583490480.jpg",
-            "quantity": 3,
-            "price": 120
-          }
-        ]
-      ],
+      "cart": [],
+      "currentOrders": [],
       "completedOrders": [],
-      "total": 1152,
-      "totalOrders": [
-        780
-      ],
+      "total": 0,
+      "totalOrders": [],
       "isLoggied": true,
-      "currentOrderNumbers": [
-        1618582110901
-      ],
-      "currentOrderDates": [
-        "Fri Apr 16 2021 17:08:30 GMT+0300 (Москва, стандартное время)"
-      ],
+      "currentOrderNumbers": [],
+      "currentOrderDates": [],
       "htmlPage": null
     },
     {
@@ -136,16 +98,6 @@
       "id": 1618079447860,
       "email": "deny@gmail.com",
       "password": "222",
-      "cart": [],
-      "currentOrders": [],
-      "completedOrders": [],
-      "total": 0,
-      "isLoggied": false
-    },
-    {
-      "id": 1618133949450,
-      "email": "q@1@2",
-      "password": "1",
       "cart": [],
       "currentOrders": [],
       "completedOrders": [],
