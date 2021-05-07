@@ -3,7 +3,7 @@ import ToolsShopApi from "../api/toolsShopApi";
 import { displayLogoutBlock } from "./displayAuthBlock";
 import { readCookie } from "../utils/helpers";
 
-export let login = readCookie("email");
+export const login = readCookie("email");
 
 export default function checkLoggied() {
   const toolsShopApi = new ToolsShopApi();

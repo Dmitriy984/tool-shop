@@ -9,7 +9,7 @@
       "completedOrders": [],
       "total": 0,
       "totalOrders": [],
-      "isLoggied": true,
+      "isLoggied": false,
       "currentOrderNumbers": [],
       "currentOrderDates": [],
       "htmlPage": null
@@ -163,6 +163,17 @@
       "id": 1618426912348,
       "email": "mick@f.r",
       "password": "333",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": false
+    },
+    {
+      "id": 1618912805366,
+      "email": "bj@rt.y",
+      "password": "111",
       "cart": [],
       "currentOrders": [],
       "completedOrders": [],

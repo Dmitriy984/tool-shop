@@ -1,29 +1,28 @@
 import ToolsShopApi from "../api/toolsShopApi";
 import checkEmailField from "./checkEmailField";
+import { form, formContainer } from "../header/createSingUpHeader";
 
 export default function passSingUp() {
   const toolsShopApi = new ToolsShopApi();
-  const form = document.getElementById("registration-form");
-  const container = document.getElementById("registration-form-container");
 
   function showCover() {
     let coverDiv = document.createElement("div");
     coverDiv.id = "cover-div";
     document.body.style.overflowY = "hidden";
     document.body.append(coverDiv);
-    container.style.display = "block";
+    formContainer.style.display = "block";
   }
 
   function hideCover() {
     document.getElementById("cover-div").remove();
     document.body.style.overflowY = "";
-    container.style.display = "none";
+    formContainer.style.display = "none";
     document.onkeydown = null;
   }
 
   document.getElementById("show-register").addEventListener("click", () => {
     showCover();
-    form.elements.login.addEventListener("blur", () => checkEmailField(form.elements.login));
+    form.login.addEventListener("blur", () => checkEmailField(form.login));
 
     form.addEventListener("submit", () => {
       let valueLogin = form.login.value;
