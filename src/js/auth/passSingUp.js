@@ -39,6 +39,8 @@ export default function passSingUp() {
         password: valuePassword,
         cart: [],
         currentOrders: [],
+        currentOrderNumbers: [],
+        currentOrderDates: [],
         completedOrders: [],
         totalOrders: [],
         total: 0,

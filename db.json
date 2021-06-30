@@ -180,6 +180,19 @@
       "totalOrders": [],
       "total": 0,
       "isLoggied": false
+    },
+    {
+      "id": 1625085972902,
+      "email": "mars@gmail.com",
+      "password": "111",
+      "cart": [],
+      "currentOrders": [],
+      "completedOrders": [],
+      "currentOrderNumbers": [],
+      "currentOrderDates": [],
+      "totalOrders": [],
+      "total": 0,
+      "isLoggied": true
     }
   ],
   "unregUsers": [
